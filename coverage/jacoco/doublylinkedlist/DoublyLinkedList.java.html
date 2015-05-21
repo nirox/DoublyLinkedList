@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DoublyLinkedList.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DoublyLinkedList</a> &gt; <a href="index.source.html" class="el_package">doublylinkedlist</a> &gt; <span class="el_source">DoublyLinkedList.java</span></div><h1>DoublyLinkedList.java</h1><pre class="source lang-java linenums">package doublylinkedlist;
+
+public class DoublyLinkedList&lt;T&gt; {
+    private static class Node&lt;E&gt; {
+	private E element;
+	private Node&lt;E&gt; next;
+	private Node&lt;E&gt; previous;
+
+<span class="fc" id="L9">	public Node(E element, Node&lt;E&gt; next, Node&lt;E&gt; previous) {</span>
+<span class="fc" id="L10">	    this.element = element;</span>
+<span class="fc" id="L11">	    this.previous = previous;</span>
+<span class="fc" id="L12">	    this.next = next;</span>
+<span class="fc" id="L13">	}</span>
+    }
+
+    private Node&lt;T&gt; first, last;
+
+<span class="fc" id="L18">    public DoublyLinkedList() {</span>
+<span class="fc" id="L19">	this.first = null;</span>
+<span class="fc" id="L20">	this.last = null;</span>
+<span class="fc" id="L21">    }</span>
+
+    public boolean isEmpty() {
+<span class="pc bpc" id="L24" title="1 of 4 branches missed.">	return first == null &amp;&amp; last == null;</span>
+    }
+
+    public T first() throws DoublyLinkedListException {
+<span class="fc bfc" id="L28" title="All 2 branches covered.">	if (this.isEmpty())</span>
+<span class="fc" id="L29">	    throw new DoublyLinkedListException(&quot;Vacio&quot;);</span>
+<span class="fc" id="L30">	return this.first.element;</span>
+    }
+
+    public T last() throws DoublyLinkedListException {
+<span class="fc bfc" id="L34" title="All 2 branches covered.">	if (this.isEmpty())</span>
+<span class="fc" id="L35">	    throw new DoublyLinkedListException(&quot;Vacio&quot;);</span>
+<span class="fc" id="L36">	return this.last.element;</span>
+    }
+
+    public int size() {
+	int i;
+<span class="fc bfc" id="L41" title="All 2 branches covered.">	if (this.isEmpty()) {</span>
+<span class="fc" id="L42">	    i = 0;</span>
+<span class="fc" id="L43">	} else {</span>
+<span class="fc" id="L44">	    i = 0;</span>
+<span class="fc" id="L45">	    Node&lt;T&gt; aux = first;</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">	    while (aux != null) {</span>
+<span class="fc" id="L47">		aux = aux.next;</span>
+<span class="fc" id="L48">		i++;</span>
+	    }
+	}
+<span class="fc" id="L51">	return i;</span>
+    }
+
+    public void insertFirst(T elem) {
+<span class="fc bfc" id="L55" title="All 2 branches covered.">	if (this.first == null) {</span>
+<span class="fc" id="L56">	    this.first = new Node&lt;T&gt;(elem, null, null);</span>
+<span class="fc" id="L57">	    last = first;</span>
+<span class="fc" id="L58">	} else {</span>
+<span class="fc" id="L59">	    Node&lt;T&gt; auxNode = new Node&lt;T&gt;(elem, first, null);</span>
+<span class="fc" id="L60">	    first.previous = auxNode;</span>
+<span class="fc" id="L61">	    first = auxNode;</span>
+	}
+<span class="fc" id="L63">    }</span>
+
+    public void insertLast(T elem) {
+<span class="fc bfc" id="L66" title="All 2 branches covered.">	if (first == null) {</span>
+<span class="fc" id="L67">	    last = new Node&lt;T&gt;(elem, null, null);</span>
+<span class="fc" id="L68">	    first = last;</span>
+<span class="fc" id="L69">	} else {</span>
+<span class="fc" id="L70">	    Node&lt;T&gt; auxNode = new Node&lt;T&gt;(elem, null, last);</span>
+<span class="fc" id="L71">	    last.next = auxNode;</span>
+<span class="fc" id="L72">	    last = auxNode;</span>
+	}
+<span class="fc" id="L74">    }</span>
+
+    public void deleteFirst() throws DoublyLinkedListException {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">	if (this.isEmpty()) {</span>
+<span class="fc" id="L78">	    throw new DoublyLinkedListException(&quot;Node is Empty&quot;);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">	} else if (this.size() == 1) {</span>
+<span class="fc" id="L80">	    first = null;</span>
+<span class="fc" id="L81">	    last = null;</span>
+<span class="fc" id="L82">	} else {</span>
+<span class="fc" id="L83">	    first = first.next;</span>
+<span class="fc" id="L84">	    first.previous = null;</span>
+	}
+<span class="fc" id="L86">    }</span>
+
+    public void deleteLast() throws DoublyLinkedListException {
+<span class="fc bfc" id="L89" title="All 2 branches covered.">	if (this.isEmpty()) {</span>
+<span class="fc" id="L90">	    throw new DoublyLinkedListException(&quot;Node is Empty&quot;);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">	} else if (this.size() == 1) {</span>
+<span class="fc" id="L92">	    first = null;</span>
+<span class="fc" id="L93">	    last = null;</span>
+<span class="fc" id="L94">	} else {</span>
+<span class="fc" id="L95">	    last = last.previous;</span>
+<span class="fc" id="L96">	    last.next = null;</span>
+	}
+<span class="fc" id="L98">    }</span>
+
+    public String toString() {
+<span class="fc" id="L101">	Node&lt;T&gt; aux = first;</span>
+<span class="fc" id="L102">	String message = &quot;&quot;;</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">	while (aux != null) {</span>
+<span class="fc" id="L104">	    message = message + aux.element + &quot; &quot;;</span>
+<span class="fc" id="L105">	    aux = aux.next;</span>
+	}
+<span class="fc" id="L107">	return message;</span>
+    }
+
+    public boolean search(T elem) {
+<span class="fc" id="L111">	boolean search = false;</span>
+<span class="fc" id="L112">	Node&lt;T&gt; aux = first;</span>
+<span class="fc bfc" id="L113" title="All 4 branches covered.">	while (!search &amp;&amp; aux != null) {</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">	    if (aux.element.equals(elem)) {</span>
+<span class="fc" id="L115">		search = true;</span>
+<span class="fc" id="L116">	    } else {</span>
+<span class="fc" id="L117">		aux = aux.next;</span>
+	    }
+	}
+<span class="fc" id="L120">	return search;</span>
+    }
+
+    public DoublyLinkedList&lt;T&gt; reverseList() {
+<span class="fc" id="L124">	DoublyLinkedList&lt;T&gt; list = new DoublyLinkedList&lt;T&gt;();</span>
+<span class="fc" id="L125">	Node&lt;T&gt; aux = last;</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">	while (aux != null) {</span>
+<span class="fc" id="L127">	    list.insertLast(aux.element);</span>
+<span class="fc" id="L128">	    aux = aux.previous;</span>
+	}
+<span class="fc" id="L130">	return list;</span>
+    }
+
+    public void insertIndex(int index, T elem) throws DoublyLinkedListException {
+<span class="fc bfc" id="L134" title="All 4 branches covered.">	if (index &gt; this.size() || index &lt; 0) {</span>
+<span class="fc" id="L135">	    throw new DoublyLinkedListException(&quot;Incorrect Index&quot;);</span>
+	}
+<span class="fc bfc" id="L137" title="All 2 branches covered.">	if (index == 0) {</span>
+<span class="fc" id="L138">	    this.insertFirst(elem);</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">	} else if (index == this.size()) {</span>
+<span class="fc" id="L140">	    this.insertLast(elem);</span>
+<span class="fc" id="L141">	} else {</span>
+<span class="fc" id="L142">	    int var = index;</span>
+<span class="fc" id="L143">	    Node&lt;T&gt; auxcurrent = first;</span>
+<span class="fc" id="L144">	    Node&lt;T&gt; auxprevious = null;</span>
+<span class="pc bpc" id="L145" title="1 of 4 branches missed.">	    while (auxcurrent != null &amp;&amp; var &gt; 0) {</span>
+<span class="fc" id="L146">		auxprevious = auxcurrent;</span>
+<span class="fc" id="L147">		auxcurrent = auxcurrent.next;</span>
+<span class="fc" id="L148">		var--;</span>
+	    }
+<span class="fc" id="L150">	    Node&lt;T&gt; newNode = new Node&lt;T&gt;(elem, auxcurrent, auxprevious);</span>
+<span class="fc" id="L151">	    auxprevious.next = newNode;</span>
+<span class="fc" id="L152">	    auxcurrent.previous = newNode;</span>
+	}
+<span class="fc" id="L154">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

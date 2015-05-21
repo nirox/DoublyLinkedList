@@ -21,14 +21,18 @@ public class DoublyLinkedList<T> {
     }
 
     public boolean isEmpty() {
-	return this.first == null && this.last == null;
+	return first == null && last == null;
     }
 
-    public T first() {
+    public T first() throws DoublyLinkedListException {
+	if (this.isEmpty())
+	    throw new DoublyLinkedListException("Vacio");
 	return this.first.element;
     }
 
-    public T last() {
+    public T last() throws DoublyLinkedListException {
+	if (this.isEmpty())
+	    throw new DoublyLinkedListException("Vacio");
 	return this.last.element;
     }
 
@@ -70,8 +74,11 @@ public class DoublyLinkedList<T> {
     }
 
     public void deleteFirst() throws DoublyLinkedListException {
-	if (first == null) {
+	if (this.isEmpty()) {
 	    throw new DoublyLinkedListException("Node is Empty");
+	} else if (this.size() == 1) {
+	    first = null;
+	    last = null;
 	} else {
 	    first = first.next;
 	    first.previous = null;
@@ -79,8 +86,11 @@ public class DoublyLinkedList<T> {
     }
 
     public void deleteLast() throws DoublyLinkedListException {
-	if (first == null) {
+	if (this.isEmpty()) {
 	    throw new DoublyLinkedListException("Node is Empty");
+	} else if (this.size() == 1) {
+	    first = null;
+	    last = null;
 	} else {
 	    last = last.previous;
 	    last.next = null;
@@ -121,7 +131,7 @@ public class DoublyLinkedList<T> {
     }
 
     public void insertIndex(int index, T elem) throws DoublyLinkedListException {
-	if (index>this.size()){
+	if (index > this.size() || index < 0) {
 	    throw new DoublyLinkedListException("Incorrect Index");
 	}
 	if (index == 0) {
@@ -129,10 +139,10 @@ public class DoublyLinkedList<T> {
 	} else if (index == this.size()) {
 	    this.insertLast(elem);
 	} else {
-	    int var= index;
+	    int var = index;
 	    Node<T> auxcurrent = first;
 	    Node<T> auxprevious = null;
-	    while (auxcurrent != null && var >0) {
+	    while (auxcurrent != null && var > 0) {
 		auxprevious = auxcurrent;
 		auxcurrent = auxcurrent.next;
 		var--;
